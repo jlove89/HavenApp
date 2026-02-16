@@ -2,98 +2,64 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "backend-install-deps",
+      "label": "🔧 Start Backend Server",
       "type": "shell",
       "command": "python",
-      "args": ["-m", "pip", "install", "-q", "-r", "backend/requirements.txt"],
-      "windows": {
-        "command": "python",
-        "args": ["-m", "pip", "install", "-q", "-r", "backend/requirements.txt"]
+      "args": ["app.py"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
       },
+      "isBackground": true,
       "presentation": {
-        "reveal": "silent",
-        "panel": "shared"
+        "reveal": "always",
+        "panel": "new",
+        "group": "launch"
       },
-      "isBackground": false,
-      "problemMatcher": []
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "WARNING",
+          "endsPattern": "WARNING.*Running on"
+        }
+      }
     },
     {
-      "label": "flutter-install-deps",
+      "label": "📱 Start Flutter Web",
       "type": "shell",
       "command": "flutter",
-      "args": ["pub", "get"],
+      "args": ["run", "-d", "web", "--web-port=8080", "--web-browser-flag=--disable-extensions"],
       "options": {
         "cwd": "${workspaceFolder}/mobile"
       },
+      "isBackground": true,
       "presentation": {
-        "reveal": "silent",
-        "panel": "shared"
+        "reveal": "always",
+        "panel": "new",
+        "group": "launch"
       },
-      "isBackground": false,
       "problemMatcher": []
-    },
-    {
-      "label": "🔧 Run Backend Only",
-      "type": "shell",
-      "command": "cd backend && python app.py",
-      "windows": {
-        "command": "cd backend && python app.py"
-      },
-      "isBackground": false,
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "group": {
-        "kind": "test",
-        "isDefault": false
-      }
-    },
-    {
-      "label": "📱 Run Flutter Web Only",
-      "type": "shell",
-      "command": "flutter run -d web",
-      "options": {
-        "cwd": "${workspaceFolder}/mobile"
-      },
-      "isBackground": false,
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "group": {
-        "kind": "test",
-        "isDefault": false
-      }
     },
     {
       "label": "🎯 Go Live - Start Everything",
       "type": "shell",
-      "dependsOn": ["🔧 Run Backend Only", "📱 Run Flutter Web Only"],
-      "dependsOrder": "sequence",
+      "command": "echo",
+      "args": ["Starting HavenApp..."],
+      "dependsOn": ["🔧 Start Backend Server", "📱 Start Flutter Web"],
+      "dependsOrder": "parallel",
       "isBackground": true,
       "presentation": {
         "reveal": "always",
         "panel": "shared",
         "group": "launch"
       },
+      "problemMatcher": [],
       "group": {
         "kind": "test",
         "isDefault": true
-      },
-      "problemMatcher": [
-        {
-          "pattern": {
-            "regexp": "^.*$",
-            "endOfLine": true
-          },
-          "background": {
-            "activeOnStart": true,
-            "beginsPattern": "WARNING",
-            "endsPattern": "Running on"
-          }
-        }
-      ]
+      }
     }
   ]
 }

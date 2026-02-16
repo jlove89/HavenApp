@@ -1,6 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[python]": {
     "editor.defaultFormatter": "ms-python.python",
     "editor.formatOnSave": true
@@ -9,9 +8,6 @@
     "editor.defaultFormatter": "Dart-Code.dart-code",
     "editor.formatOnSave": true
   },
-  "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true,
-  "python.formatting.provider": "black",
   "files.exclude": {
     "**/__pycache__": true,
     "**/*.pyc": true,
@@ -23,5 +19,8 @@
     "mobile/.dart_tool": true,
     "mobile/build": true,
     "node_modules": true
-  }
+  },
+  // Disable Live Server to avoid interfering with Flask
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.port": 0
 }

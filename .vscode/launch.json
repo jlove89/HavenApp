@@ -5,17 +5,13 @@
       "name": "🚀 Backend Server",
       "type": "python",
       "request": "launch",
-      "module": "flask",
-      "env": {
-        "FLASK_APP": "backend/app.py",
-        "FLASK_ENV": "development",
-        "FLASK_DEBUG": "1"
-      },
-      "args": ["run", "--port", "5000"],
-      "jinja": true,
-      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/backend/app.py",
+      "cwd": "${workspaceFolder}/backend",
       "console": "integratedTerminal",
-      "preLaunchTask": "backend-install-deps"
+      "env": {
+        "FLASK_ENV": "development"
+      },
+      "justMyCode": true
     },
     {
       "name": "📱 Flutter Web App",
@@ -23,9 +19,8 @@
       "request": "launch",
       "program": "mobile/lib/main.dart",
       "cwd": "${workspaceFolder}",
-      "args": ["--web", "--web-port=8080"],
-      "console": "integratedTerminal",
-      "preLaunchTask": "flutter-install-deps"
+      "args": ["run", "-d", "web", "--web-port=8080"],
+      "console": "integratedTerminal"
     }
   ],
   "compounds": [
