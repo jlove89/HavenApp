@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HavenApp - Quick Start</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .step {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .step:last-of-type {
+            border-bottom: none;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+        
+        .step-title {
+            display: inline-block;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            vertical-align: middle;
+        }
+        
+        .step-content {
+            margin-left: 55px;
+            margin-top: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: "Monaco", "Courier New", monospace;
+            overflow-x: auto;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #155724;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        
+        .link-box {
+            background: #e7f3ff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .link-box a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .link-box a:hover {
+            text-decoration: underline;
+        }
+        
+        .os-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .os-button:hover {
+            background: #764ba2;
+        }
+        
+        .troubleshoot {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .troubleshoot h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        .troubleshoot-content {
+            display: none;
+            color: #666;
+            padding-left: 20px;
+            border-left: 3px solid #ffc107;
+            margin-top: 10px;
+        }
+        
+        .troubleshoot-content.active {
+            display: block;
+        }
+        
+        .footer {
+            background: #f5f5f5;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ HavenApp</h1>
+            <p>Quick Start Guide - Get Running in 3 Minutes!</p>
+        </div>
+        
+        <div class="content">
+            <!-- Step 1 -->
+            <div class="step">
+                <div>
+                    <span class="step-number">1</span>
+                    <span class="step-title">Launch the Application</span>
+                </div>
+                <div class="step-content">
+                    <p><strong>Choose your operating system:</strong></p>
+                    
+                    <div style="margin: 15px 0;">
+                        <a href="javascript:showWindows()" class="os-button">Windows</a>
+                        <a href="javascript:showMac()" class="os-button">Mac/Linux</a>
+                    </div>
+                    
+                    <div id="windows-instructions" style="display:none; margin-top: 15px;">
+                        <h4 style="color: #667eea; margin-bottom: 10px;">📌 Windows Instructions</h4>
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li>Open your project folder</li>
+                            <li><strong>Double-click</strong> the file: <code>launch-app.bat</code></li>
+                            <li>Two terminal windows will appear (don't close them!)</li>
+                            <li>Wait <strong>10-15 seconds</strong> for them to show "Running"</li>
+                        </ol>
+                    </div>
+                    
+                    <div id="mac-instructions" style="display:none; margin-top: 15px;">
+                        <h4 style="color: #667eea; margin-bottom: 10px;">📌 Mac/Linux Instructions</h4>
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li>Open Terminal</li>
+                            <li>Copy this command and paste it:
+                                <div class="code-block">bash launch-app.sh</div>
+                            </li>
+                            <li>Press Enter</li>
+                            <li>Wait <strong>10-15 seconds</strong> for the servers to start</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step">
+                <div>
+                    <span class="step-number">2</span>
+                    <span class="step-title">Open Your Browser</span>
+                </div>
+                <div class="step-content">
+                    <p>Open any web browser (Chrome, Firefox, Safari, Edge, etc.)</p>
+                    <p>Go to this address and press Enter:</p>
+                    <div class="code-block" style="font-size: 1.2em; background: #667eea; color: white; border-left-color: white;">
+                        http://localhost:8080
+                    </div>
+                    <p style="margin-top: 15px;">You should see the <strong>HavenApp Login Page</strong>!</p>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step">
+                <div>
+                    <span class="step-number">3</span>
+                    <span class="step-title">Login to the App</span>
+                </div>
+                <div class="step-content">
+                    <p>Use these test credentials:</p>
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <div style="margin-bottom: 10px;">
+                            <strong>Email:</strong> <code>test@example.com</code>
+                        </div>
+                        <div>
+                            <strong>Password:</strong> <code>password123</code>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px;">Click <strong>"Sign in"</strong></p>
+                    <div class="success-box">
+                        ✅ You should now see the <strong>Dashboard</strong>!<br>
+                        Congratulations! HavenApp is running!
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Troubleshooting -->
+            <div style="margin-top: 40px; border-top: 2px solid #667eea; padding-top: 30px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;">❓ Troubleshooting</h3>
+                
+                <div class="troubleshoot">
+                    <h4 onclick="toggleTroubleshoot(this)">❌ I see a blank page or error</h4>
+                    <div class="troubleshoot-content">
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li>Try refreshing the page: Press <strong>F5</strong></li>
+                            <li>Wait 10 more seconds</li>
+                            <li>Check that both terminal windows are still running</li>
+                            <li>Try again: <code>http://localhost:8080</code></li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="troubleshoot">
+                    <h4 onclick="toggleTroubleshoot(this)">❌ It says "Python not found"</h4>
+                    <div class="troubleshoot-content">
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li>Download Python from: <strong>https://python.org</strong></li>
+                            <li>Run the installer</li>
+                            <li><strong>IMPORTANT:</strong> Check the box "Add Python to PATH"</li>
+                            <li>Restart your terminal</li>
+                            <li>Try launching again</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="troubleshoot">
+                    <h4 onclick="toggleTroubleshoot(this)">❌ It says "Flutter not found"</h4>
+                    <div class="troubleshoot-content">
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li>Download Flutter from: <strong>https://flutter.dev</strong></li>
+                            <li>Follow the installation guide for your operating system</li>
+                            <li>Restart your terminal</li>
+                            <li>Try launching again</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="troubleshoot">
+                    <h4 onclick="toggleTroubleshoot(this)">❌ Port 5000 is already in use</h4>
+                    <div class="troubleshoot-content">
+                        <p style="margin-bottom: 10px;">Something else is using that port.</p>
+                        <p><strong>Quick fix:</strong> Restart your computer and try again.</p>
+                    </div>
+                </div>
+                
+                <div class="troubleshoot">
+                    <h4 onclick="toggleTroubleshoot(this)">❌ Still having issues?</h4>
+                    <div class="troubleshoot-content">
+                        <p>Read the complete guides in your project folder:</p>
+                        <ul style="margin: 10px 0 10px 20px;">
+                            <li><strong>START_HERE.md</strong> - Detailed beginner guide</li>
+                            <li><strong>CHECKLIST.md</strong> - Verification checklist</li>
+                            <li><strong>RUNNING_THE_APP.md</strong> - Complete instructions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features -->
+            <div style="margin-top: 40px; border-top: 2px solid #667eea; padding-top: 30px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;">🎯 What You Can Do</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                        <strong style="color: #667eea;">📝 Journal</strong>
+                        <p style="margin-top: 5px; color: #666; font-size: 0.9em;">Write private safety notes</p>
+                    </div>
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                        <strong style="color: #667eea;">📞 Resources</strong>
+                        <p style="margin-top: 5px; color: #666; font-size: 0.9em;">View support hotlines</p>
+                    </div>
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                        <strong style="color: #667eea;">⚠️ Emergency</strong>
+                        <p style="margin-top: 5px; color: #666; font-size: 0.9em;">Red button for alerts</p>
+                    </div>
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                        <strong style="color: #667eea;">⚙️ Settings</strong>
+                        <p style="margin-top: 5px; color: #666; font-size: 0.9em;">Manage privacy & consent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p style="margin-bottom: 10px;"><strong>🎉 You've got this! Don't worry if you get stuck - just follow the steps!</strong></p>
+            <p style="font-size: 0.9em;">For more detailed help, see START_HERE.md or CHECKLIST.md in your project folder</p>
+        </div>
+    </div>
+    
+    <script>
+        function showWindows() {
+            document.getElementById('windows-instructions').style.display = 'block';
+            document.getElementById('mac-instructions').style.display = 'none';
+        }
+        
+        function showMac() {
+            document.getElementById('windows-instructions').style.display = 'none';
+            document.getElementById('mac-instructions').style.display = 'block';
+        }
+        
+        function toggleTroubleshoot(element) {
+            const content = element.nextElementSibling;
+            content.classList.toggle('active');
+        }
+        
+        // Show Windows by default
+        showWindows();
+    </script>
+</body>
+</html>
