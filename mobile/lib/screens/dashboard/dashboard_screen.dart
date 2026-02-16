@@ -4,6 +4,10 @@ import '../../config/theme.dart';
 import '../../models/alert.dart';
 import '../../providers/alert_provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../widgets/risk_meter.dart';
+import '../resources/resources_screen.dart';
+import '../journal/journal_screen.dart';
+import '../settings/settings_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -100,50 +104,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(24),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Current Safety Level',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: alertProvider.latestAlert?.getRiskColor() ??
-                              AppTheme.successColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  (alertProvider.latestAlert?.getRiskColor() ??
-                                          AppTheme.successColor)
-                                      .withOpacity(0.5),
-                              blurRadius: 12,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            alertProvider.latestAlert?.getRiskLabel() ?? 'Safe',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Risk Score: ${(alertProvider.latestAlert?.riskLevel ?? 0).toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
+                  child: RiskMeter(
+                    riskLevel: alertProvider.latestAlert?.riskLevel ?? 0.0,
+                    label: alertProvider.latestAlert?.getRiskLabel() ?? 'Safe',
+                    color: alertProvider.latestAlert?.getRiskColor() ??
+                        AppTheme.successColor,
                   ),
                 ),
               ),
@@ -285,92 +250,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildJournalTab() {
-    return Container(
-      color: Colors.grey[50],
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.book,
-              size: 64,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Safety Journal',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Coming soon: Document your experiences',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return const JournalScreen();
   }
 
   Widget _buildResourcesTab() {
-    return Container(
-      color: Colors.grey[50],
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.help,
-              size: 64,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Resources',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Coming soon: Access support services',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return const ResourcesScreen();
   }
 
   Widget _buildSettingsTab() {
-    return Container(
-      color: Colors.grey[50],
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.settings,
-              size: 64,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Settings',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Coming soon: Adjust preferences',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return const SettingsScreen();
   }
 }
