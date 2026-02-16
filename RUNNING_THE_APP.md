@@ -1,16 +1,161 @@
-# Running Haven Mobile App
+# Running Haven: Mobile App + Backend
+
+This guide covers running both the Flutter mobile app and the Flask backend API for the complete Haven safety application.
 
 ## Prerequisites
 
-You must have Flutter SDK installed. If not, install from https://flutter.dev/docs/get-started/install
+### Mobile App
 
-Verify your setup:
+- **Flutter SDK** (3.0+): https://flutter.dev/docs/get-started/install
+- **iOS**: Xcode with iOS deployment target 12.0+
+- **Android**: Android SDK API 21+
+
+### Backend API
+
+- **Python** 3.8+
+- **pip** (Python package manager)
+
+## Quick Start (Recommended)
+
+Run both in separate terminals:
+
+**Terminal 1 - Backend API:**
 
 ```bash
-flutter doctor
+cd backend
+pip install -r requirements.txt
+python app.py
 ```
 
-## Getting Started
+**Terminal 2 - Mobile App:**
+
+```bash
+cd mobile
+flutter pub get
+flutter run
+```
+
+---
+
+# Backend API Setup
+
+## Installation
+
+### 1. Navigate to backend directory
+
+```bash
+cd backend
+```
+
+### 2. Create virtual environment (optional but recommended)
+
+```bash
+# macOS/Linux
+python -m venv venv
+source venv/bin/activate
+
+# Windows
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Load environment variables
+
+The `.env` file is already configured for development with SQLite. No additional setup needed.
+
+### 5. Run the server
+
+```bash
+python app.py
+```
+
+Server will start on `http://localhost:5000`
+
+## API Endpoints
+
+### Authentication
+
+- `POST /api/auth/register` — Register new user
+
+  ```bash
+  curl -X POST http://localhost:5000/api/auth/register \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "user@example.com",
+      "password": "Password123",
+      "name": "User Name"
+    }'
+  ```
+
+- `POST /api/auth/login` — Login user
+  ```bash
+  curl -X POST http://localhost:5000/api/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "user@example.com",
+      "password": "Password123"
+    }'
+  ```
+
+### Alerts
+
+- `GET /api/alerts` — Get all user alerts (requires JWT token)
+- `POST /api/alerts` — Create alert (panic button, manual)
+- `GET /api/alerts/<id>` — Get specific alert
+- `PUT /api/alerts/<id>/acknowledge` — Mark as acknowledged
+
+### Signals
+
+- `GET /api/signals` — Get detected signals
+- `POST /api/signals` — Record new signal
+
+### User
+
+- `GET /api/user` — Get current user profile
+- `PUT /api/user` — Update profile
+- `GET /api/user/consent` — Get consent settings
+- `PUT /api/user/consent` — Update consent
+
+### Health
+
+- `GET /api/health` — Health check
+
+## Database
+
+**Development**: SQLite (`havenapp.db`)
+**Testing**: In-memory `:memory:`
+**Production**: PostgreSQL (configure `DATABASE_URL`)
+
+Database is automatically initialized on first run.
+
+## Configuration
+
+Edit `backend/.env` to change settings:
+
+```
+FLASK_ENV=development          # development, testing, production
+DATABASE_URL=sqlite:///havenapp.db
+SECRET_KEY=dev-secret-key-change-in-prod
+JWT_SECRET_KEY=dev-jwt-secret-change-in-prod
+```
+
+For PostgreSQL in production:
+
+```
+DATABASE_URL=postgresql://user:password@host:5432/havenapp
+```
+
+---
+
+# Mobile App Setup
+
+## Installation
 
 ### 1. Navigate to mobile directory
 
@@ -18,7 +163,7 @@ flutter doctor
 cd mobile
 ```
 
-### 2. Get dependencies
+### 2. Get Flutter dependencies
 
 ```bash
 flutter pub get
@@ -27,29 +172,247 @@ flutter pub get
 ### 3. Run on iOS (macOS only)
 
 ```bash
+# List available devices
+flutter devices
+
+# Run on iPhone simulator
 flutter run -d iPhone
-```
 
-Or if you have multiple devices:
-
-```bash
-flutter devices  # List available devices
+# Or run on specific device
 flutter run -d <device_id>
 ```
 
 ### 4. Run on Android
 
 ```bash
+# Start Android emulator first, then:
+flutter run
+
+# Or specify emulator
 flutter run -d emulator-5554
 ```
 
-Or to run on the first available device:
+### 5. Run on web (experimental)
 
 ```bash
-flutter run
+flutter run -d chrome
 ```
 
-## App Structure
+## Configuration
+
+The mobile app is pre-configured to connect to the backend at `http://localhost:5000/api`.
+
+To change the backend URL, edit `mobile/lib/services/api_service.dart`:
+
+```dart
+static const String _baseUrl = 'http://localhost:5000/api';
+```
+
+## App Features
+
+### Authentication
+
+- Register new account
+- Login with email/password
+- Secure token storage (OS keychain)
+- Automatic session restoration
+
+### Safety Dashboard
+
+- Real-time risk meter (0-100%)
+- Panic button (red EMERGENCY button)
+- Recent alerts list
+- Risk color coding (green/yellow/orange/red)
+
+### Safety Journal
+
+- Create safety entries
+- Timestamp tracking
+- Local storage
+
+### Support Resources
+
+- National DV Hotline: 1-800-799-7233
+- Crisis Text Line: Text HOME to 741741
+- Legal aid and shelter information
+- Safety planning guides
+
+### Settings
+
+- Privacy consent toggles
+  - Passive signal detection
+  - Location tracking
+  - Journal backup
+  - Emergency sharing
+- Account management
+- Profile editing
+- Logout / Delete account
+
+## Troubleshooting
+
+### Backend Port Already in Use
+
+```bash
+# Find process using port 5000
+lsof -i :5000
+
+# Kill it
+kill -9 <PID>
+```
+
+### Flutter "No Devices Found"
+
+- **iOS**: Open Xcode > Devices & Simulators, start a simulator
+- **Android**: Start Android emulator or connect device with `adb devices`
+
+### "Connection refused" when mobile app tries to reach backend
+
+Ensure:
+
+1. Backend is running on port 5000
+2. Mobile app points to correct URL
+3. No firewall blocking localhost:5000
+4. For Android emulator: use `10.0.2.2` instead of `localhost`
+
+### JWT Token Expired
+
+Mobile app automatically logs user out and redirects to login screen.
+
+### Database Lock (SQLite)
+
+SQLite has limited concurrency. Switch to PostgreSQL for production:
+
+```bash
+export DATABASE_URL=postgresql://user:pass@localhost:5432/havenapp
+python app.py
+```
+
+---
+
+# Full Stack Testing
+
+## Test Workflow
+
+1. **Register User**
+
+   ```bash
+   curl -X POST http://localhost:5000/api/auth/register \
+     -H "Content-Type: application/json" \
+     -d '{
+       "email": "testuser@example.com",
+       "password": "TestPassword123",
+       "name": "Test User"
+     }'
+   ```
+
+   Save the `access_token` from response.
+
+2. **Login on Mobile App**
+   - Launch app
+   - Email: `testuser@example.com`
+   - Password: `TestPassword123`
+   - Should navigate to Dashboard
+
+3. **Create Alert via API**
+
+   ```bash
+   curl -X POST http://localhost:5000/api/alerts \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer <access_token>" \
+     -d '{
+       "type": "panic",
+       "riskLevel": 0.95,
+       "signals": ["manual_activation"]
+     }'
+   ```
+
+4. **View Alert in Mobile App**
+   - Navigate to Dashboard
+   - Risk meter should turn red
+   - Alert should appear in "Recent Alerts" list
+
+5. **Test Panic Button**
+   - Tap red EMERGENCY button
+   - Confirm dialog
+   - Check backend for new alert: `GET /api/alerts`
+
+---
+
+# Deployment
+
+## Backend Deployment
+
+### Using Gunicorn (Production)
+
+```bash
+gunicorn -w 4 -b 0.0.0.0:5000 'app:create_app()'
+```
+
+### Docker
+
+```bash
+docker build -t haven-backend -f backend/Dockerfile .
+docker run -p 5000:5000 haven-backend
+```
+
+### Cloud (AWS, GCP, Azure)
+
+See cloud provider documentation for Flask apps.
+
+## Mobile App Deployment
+
+### iOS App Store
+
+```bash
+flutter build ios --release
+# Follow Xcode steps to upload to App Store
+```
+
+### Google Play Store
+
+```bash
+flutter build appbundle
+# Upload to Google Play Console
+```
+
+---
+
+# Environment Variables Reference
+
+## Backend (.env file)
+
+```bash
+FLASK_ENV=development
+FLASK_DEBUG=True
+DATABASE_URL=sqlite:///havenapp.db
+SECRET_KEY=your-secret-key
+JWT_SECRET_KEY=your-jwt-secret
+LOG_LEVEL=INFO
+```
+
+See `backend/.env.example` for all options.
+
+## Mobile App
+
+Configuration in `mobile/lib/services/api_service.dart`:
+
+- `_baseUrl` — Backend API URL
+
+---
+
+# Support & Documentation
+
+- **Mobile App**: See `mobile/README.md`
+- **Backend API**: See `backend/README.md`
+- **Full Documentation**: See `docs/` folder
+  - ETHICS_PRIVACY.md — Privacy & consent framework
+  - DETECTION_APPROACH.md — Signal detection algorithm
+  - BACKEND_ARCHITECTURE.md — API design & database
+  - MOBILE_ARCHITECTURE.md — App structure
+
+---
+
+**Have questions?** Check the main README.md or open an issue on GitHub.
 
 ### File Organization
 
