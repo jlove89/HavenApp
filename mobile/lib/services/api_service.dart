@@ -1,17 +1,16 @@
 import 'package:dio/dio.dart';
+import '../config/environment_config.dart';
 
 class ApiService {
   late final Dio _dio;
   String? _authToken;
 
-  static const String _baseUrl = 'http://localhost:5000/api';
-
   ApiService() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: _baseUrl,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        baseUrl: Config.apiBaseUrl,
+        connectTimeout: Config.requestTimeout,
+        receiveTimeout: Config.requestTimeout,
       ),
     );
 
