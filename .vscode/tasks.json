@@ -1,0 +1,99 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "backend-install-deps",
+      "type": "shell",
+      "command": "python",
+      "args": ["-m", "pip", "install", "-q", "-r", "backend/requirements.txt"],
+      "windows": {
+        "command": "python",
+        "args": ["-m", "pip", "install", "-q", "-r", "backend/requirements.txt"]
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "isBackground": false,
+      "problemMatcher": []
+    },
+    {
+      "label": "flutter-install-deps",
+      "type": "shell",
+      "command": "flutter",
+      "args": ["pub", "get"],
+      "options": {
+        "cwd": "${workspaceFolder}/mobile"
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "isBackground": false,
+      "problemMatcher": []
+    },
+    {
+      "label": "🔧 Run Backend Only",
+      "type": "shell",
+      "command": "cd backend && python app.py",
+      "windows": {
+        "command": "cd backend && python app.py"
+      },
+      "isBackground": false,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "📱 Run Flutter Web Only",
+      "type": "shell",
+      "command": "flutter run -d web",
+      "options": {
+        "cwd": "${workspaceFolder}/mobile"
+      },
+      "isBackground": false,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "🎯 Go Live - Start Everything",
+      "type": "shell",
+      "dependsOn": ["🔧 Run Backend Only", "📱 Run Flutter Web Only"],
+      "dependsOrder": "sequence",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "launch"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        {
+          "pattern": {
+            "regexp": "^.*$",
+            "endOfLine": true
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "WARNING",
+            "endsPattern": "Running on"
+          }
+        }
+      ]
+    }
+  ]
+}

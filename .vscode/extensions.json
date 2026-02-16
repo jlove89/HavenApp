@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Dart",
+    "id": "Dart-Code.dart-code",
+    "description": "Dart and Flutter language support"
+  },
+  {
+    "name": "Flutter",
+    "id": "Dart-Code.flutter",
+    "description": "Flutter mobile development support"
+  },
+  {
+    "name": "Python",
+    "id": "ms-python.python",
+    "description": "Python language support and debugging"
+  },
+  {
+    "name": "Pylance",
+    "id": "ms-python.vscode-pylance",
+    "description": "Python type checking and intellisense"
+  },
+  {
+    "name": "REST Client",
+    "id": "humao.rest-client",
+    "description": "Test API endpoints directly in VS Code"
+  },
+  {
+    "name": "Thunder Client",
+    "id": "rangav.vscode-thunder-client",
+    "description": "Alternative REST client for API testing"
+  },
+  {
+    "name": "Live Server",
+    "id": "ritwickdey.LiveServer",
+    "description": "Local HTTP server with live reload (optional)"
+  },
+  {
+    "name": "Git Graph",
+    "id": "mhutchie.git-graph",
+    "description": "Visual git history"
+  },
+  {
+    "name": "GitHub Copilot",
+    "id": "GitHub.copilot",
+    "description": "AI code completion"
+  }
+]

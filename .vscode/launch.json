@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Backend Server",
+      "type": "python",
+      "request": "launch",
+      "module": "flask",
+      "env": {
+        "FLASK_APP": "backend/app.py",
+        "FLASK_ENV": "development",
+        "FLASK_DEBUG": "1"
+      },
+      "args": ["run", "--port", "5000"],
+      "jinja": true,
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "preLaunchTask": "backend-install-deps"
+    },
+    {
+      "name": "📱 Flutter Web App",
+      "type": "dart",
+      "request": "launch",
+      "program": "mobile/lib/main.dart",
+      "cwd": "${workspaceFolder}",
+      "args": ["--web", "--web-port=8080"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "flutter-install-deps"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🎯 Go Live - Full Stack (Backend + Web)",
+      "configurations": ["🚀 Backend Server", "📱 Flutter Web App"],
+      "stopAll": true
+    }
+  ]
+}

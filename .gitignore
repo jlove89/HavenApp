@@ -36,7 +36,7 @@ pubspec.lock
 *.log
 
 # IDE
-.vscode/
+# Keep .vscode configuration files for team setup
 .idea/
 *.swp
 *.swo
